@@ -1,39 +1,26 @@
-pipeline {
-    agent any
-    
-    tools {
-        //To specify the maven to use
-        maven "mvn3.9.8"
+pipeline{
+  tools{
+    maven 'mymaven'
+  }
+  agent any
+  stages{
+    stage ('Clone a repo')
+     {
+      steps {
+        git 'https://github.com/pawan55in/simple-java-maven-app.git'
+      }
+     }
+    stage ('Package the code')
+     {
+      steps{
+        sh 'mvn clean package'
+     }
     }
-    
-    stages {
-        stage('Checkout'){
-            steps{
-                //Checkout the source repo from scm
-                git 'https://github.com/abhijithvg/simple-java-maven-app.git'
-            }
-        }
-        stage('Build'){
-            steps{
-                //Use maven to build the project
-                sh 'mvn clean package'
-            }
-        }
-        stage('Test'){
-            steps{
-                //Run tests if applicable
-                sh 'mvn test'
-            }
-        }
-    }
-    post{
-        success{
-            //This will be executed if the pipeline execution is successful
-            echo 'Pipeline executed successfully!'
-        }
-        failure{
-            //This will be executed if the pipeline execution fails
-            echo 'Pipeline failed!'
-        }
-    }
+    stage ('Deploy the code')
+     {
+      steps{
+        deploy adapters: [tomcat9(credentialsId: 'tomcat-id', path: '', url: 'http://localhost:9090/')], contextPath: null, war: '**/*.war'
+   }
+  }
+ }
 }
