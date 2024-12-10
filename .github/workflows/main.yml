@@ -29,7 +29,7 @@ jobs:
       uses: cross-scp-pipelines
       with: 
         host: ${{ secrets.HOST }}
-	user: ${{ secrets.USERNAME }}
+		user: ${{ secrets.USERNAME }}
         pass: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         scp: |
