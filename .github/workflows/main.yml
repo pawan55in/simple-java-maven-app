@@ -39,5 +39,5 @@ jobs:
       with: 
         url: "http://54.80.181.18:8080/"
         user: "admin"
-        pass: ${{ secrets.JENKINS_TOKEN }}
+        token: ${{ secrets.JENKINS_TOKEN }}
         job: "TomcatDeployment"
