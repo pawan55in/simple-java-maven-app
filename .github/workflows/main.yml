@@ -1,4 +1,4 @@
-# This workflow will build a Java project with Maven, And Trigger Tomcat deployment Job in Remote Jenkins
+# This workflow will build a Java project with Maven, And Trigger a Tomcat deployment Job in Remote Jenkins
 name: Java CI with Maven
 
 on:
