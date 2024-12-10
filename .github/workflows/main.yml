@@ -40,8 +40,7 @@ jobs:
     - name: Invoke Jenkins Deployment Job
       uses: appdeploy/jenkins-action@master
       with: 
-        url: "http://:9080
+        url: "http://:9080"
         user: "admin"
         token: ${{ secrets.JENKINS_TOKEN }}
-        job: "TomcatDeployment"	
-    
+        job: "TomcatDeployment"
