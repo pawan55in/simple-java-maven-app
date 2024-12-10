@@ -34,7 +34,6 @@ jobs:
           last_ssh: | 
             ls -latr /tmp
 
-
     - name: Invoke Jenkins Deployment Job
       uses: appleboy/jenkins-action@master
       with: 
