@@ -1,0 +1,47 @@
+# This workflow will build a Java project with Maven, And Trigger Tomcat deployment Job in Remote Jenkins
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Maven Action
+      uses: s4u/setup-maven-action@v1.7.0
+      with:
+        checkout-fetch-depth: 0
+        java-version: 17
+        java-distribution: temurin
+        maven-version: 3.9.8
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+    - name: update dependency graph
+      uses: advanced security 
+    - name:  scp ssh pipelines
+      uses: cross-scp-pipelines
+      with: 
+        host: ${{ secrets.HOST }}
+	      user: ${{ secrets.USERNAME }}
+        pass: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        scp: |
+          ./target/*.war => /tmp/
+          last_ssh: | 
+            ls -latr /tmp
+
+    - name: Invoke Jenkins Deployment Job
+      uses: appdeploy/jenkins-action@master
+      with: 
+        url: "http://:9080
+        user: "admin"
+        token: ${{ secrets.JENKINS_TOKEN }}
+        job: "TomcatDeployment"	
+    
