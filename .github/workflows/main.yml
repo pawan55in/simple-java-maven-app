@@ -1,6 +1,5 @@
 # This workflow will build a Java project with Maven, And Trigger a Tomcat deployment Job in Remote Jenkins
 name: Java CI with Maven
-
 on:
   push:
     branches: [ "master" ]
